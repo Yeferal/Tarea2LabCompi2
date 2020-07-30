@@ -57,6 +57,7 @@ start with INICIO;
 
 
 INICIO ::= E:a PUNTO S:b {:System.out.println("El Numero es: "+(Double)((Double)a+(Double)b));:}
+          |E:a {:System.out.println("El Numero es: "+(Double)a));:}
           |error:e {:parser.syntax_error((Symbol)e);:};
 
 E ::= E:a T:b {: double op = ((Double)a*2)+(Double)b; RESULT = op; :}
