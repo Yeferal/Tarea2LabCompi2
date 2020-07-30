@@ -1,0 +1,68 @@
+
+//codigo usuario
+package tarea2compi2;
+import java_cup.runtime.Symbol;
+
+//Codigo para el parser, variables, metodos
+parser code
+{:
+    
+    /**private Symbol s;
+    public void syntaxError(Symbol s){
+        this.s = s;
+    }
+    public Symbol getS(Symbol s){
+        return this.s = s;
+    }
+
+    public void setAccion(String tipo,String mensaje,String accion){
+            System.out.println(tipo+"         "+mensaje);
+        }
+
+    public void syntax_error(Symbol s){
+            if(s!=null){
+                setAccion("ERROR","Error Sintaxis token: Linea: " + (s.right+1) + ",   Columna: " + (s.left+1) + ",  Simbolo: " + s.value, "");
+            }
+    }**/
+
+:}
+
+//Coidgo para las acciones gramaticales
+
+action code
+{:
+    int bandera = 0;
+    
+    public int convertirNumero(Object o){
+        try {
+		int val = Integer.parseInt((String) o);
+		return val;
+	}catch (ClassCastException ex){
+		int val = (int) o;
+		return val;
+	}
+    }
+:}
+
+//Declaraciones 
+terminal DIGITO, PUNTO;
+
+// declaracion no terminales
+non terminal INICIO, E, T, S;
+
+
+start with INICIO;
+
+//Reglas Semanticas
+
+
+INICIO ::= E:a PUNTO S:b {:System.out.println("El Numero es: "+(Double)((Double)a+(Double)b));:}
+          |error:e {:parser.syntax_error((Symbol)e);:};
+
+E ::= E:a T:b {: double op = ((Double)a*2)+(Double)b; RESULT = op; :}
+     |T:a {:RESULT = a; :};
+
+T ::= DIGITO:a {: RESULT = a; :};
+
+S ::= T:a S:b {: double op = ((Double)a+((Double)b))/2; RESULT = op; :}
+     |T:a {: RESULT = (Double)a/2; :};
